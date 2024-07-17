@@ -39,7 +39,7 @@ class Admin(User):
                 user_list.remove(user)
                 break
         else:
-            raise ValueError("UПользователь(User) с этим ID не найден!")
+            raise ValueError("Пользователь с этим ID не найден!")
 
 
 def main():
@@ -65,28 +65,27 @@ def main():
             admin = Admin(user_id, name)
             users.append(admin)
         elif choice == '3':
-            if not any(user for user in users if isinstance(user, Admin)):
-                print("Нет администраторов для выполнения этого действия.")
-                continue
-            user_id = input("Введите ID пользователя для удаления: ")
-            admin_found = False
+            admin_id = input("Введите ID администратора: ")
+            admin = None
             for user in users:
-                if isinstance(user, Admin):
+                if isinstance(user, Admin) and user.get_user_id() == admin_id:
                     admin = user
-                    admin_found = True
-                    try:
-                        admin.remove_user(users, user_id)
-                        print("Пользователь удален.")
-                    except ValueError as e:
-                        print(e)
                     break
-            if not admin_found:
-                print("Нет администратора в списке.")
+            if not admin:
+                print("Нет администраторов с таким ID для выполнения этого действия.")
+                continue
+
+            user_id = input("Введите ID пользователя для удаления: ")
+            try:
+                admin.remove_user(users, user_id)
+                print("Пользователь удален.")
+            except ValueError as e:
+                print(e)
         elif choice == '4':
             if not users:
                 print("Список пользователей пуст.")
             for user in users:
-                print(f"ID: {user.get_user_id()}, Name: {user.get_name()}, Access Level: {user.get_access_level()}")
+                print(f"ID: {user.get_user_id()}, Имя: {user.get_name()}, Уровень доступа: {user.get_access_level()}")
         elif choice == '5':
             break
         else:
@@ -95,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
