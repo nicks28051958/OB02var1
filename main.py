@@ -20,7 +20,7 @@ class User:
         if access_level in ['user', 'admin']:
             self._access_level = access_level
         else:
-            raise ValueError("Invalid access level. Must be 'user' or 'admin'.")
+            raise ValueError("Недопустимый уровень доступа!")
 
 
 class Admin(User):
@@ -30,7 +30,7 @@ class Admin(User):
 
     def add_user(self, user_list, user):
         if not isinstance(user, User):
-            raise ValueError("Can only add instances of User.")
+            raise ValueError("Можно добавить только пользователя User.")
         user_list.append(user)
 
     def remove_user(self, user_list, user_id):
@@ -39,7 +39,7 @@ class Admin(User):
                 user_list.remove(user)
                 break
         else:
-            raise ValueError("User with the given ID not found.")
+            raise ValueError("UПользователь(User) с этим ID не найден!")
 
 
 def main():
